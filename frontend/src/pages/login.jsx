@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { AiFillHome } from 'react-icons/ai'
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const [users, getUsers] = useState([]);
@@ -28,7 +30,7 @@ const Login = () => {
         const targetUser = users.find((user) => {
             if (user.email===email) {
                 if (user.password===password){
-                    navigate("/");
+                    navigate("/myPage");
                     console.log("Login successful");
                     return true;
                 }else{
@@ -52,7 +54,14 @@ const Login = () => {
     console.log(email);
 
   return (
-    <div className='flex flex-col items-center justify-center w-5/5 h-screen'>
+    <div>
+    <div className='m-4 text-6xl'>
+    <Link to={"/"}>
+        <AiFillHome/>
+    </Link>
+    </div>
+    <div className='flex flex-col items-center justify-center w-5/5'>
+        <h1 className='text-3xl text-white mb-5'>Login Page</h1>
         <div className="mb-6 w-9/12">
             <label for="email" className="mb-2 text-xl font-medium text-gray-900 dark:text-white">Your email</label>
             <input name="email" onChange={handleEmail} value={email} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
@@ -68,6 +77,7 @@ const Login = () => {
             </div>
         </div>
         <button onClick={handleClick} type="submit" className="justify-start text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+  </div>
   </div>
   )
 }

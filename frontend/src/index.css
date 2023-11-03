@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.font {
+    font-family: 'Caprasimo', serif;
+    font-family: 'Caveat', cursive;
+    font-family: 'Libre Baskerville', serif;
+    font-family: 'Pacifico', cursive;
+}
