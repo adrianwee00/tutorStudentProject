@@ -54,7 +54,7 @@ const Login = () => {
     console.log(email);
 
   return (
-    <div>
+    <div className='h-screen'>
     <div className='m-4 text-6xl'>
     <Link to={"/"}>
         <AiFillHome/>
