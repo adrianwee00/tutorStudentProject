@@ -1,8 +1,11 @@
 import React from 'react'
+import { NavbarMyPage } from '../components/navbar.jsx'
 
 const MyPage = () => {
   return (
-    <div></div>
+    <div>
+      <NavbarMyPage/>
+    </div>
   )
 }
 

@@ -1,7 +1,26 @@
-import express from "express";
+import express, { Router } from "express";
 import { user } from "../models/userModel.js";
+import { test, loginUser } from "../controllers/authController.js";
+import cors from 'cors';
+import { hashPassword, comparePassword } from "../helpers/auth.js";
+
 
 const userRouter = express.Router();
+
+userRouter.use(cors());
+
+userRouter.get('/', async (req, res) => {
+    try {
+        const userIds = await user.find({});
+        return res.json(userIds);
+    } catch (error) {
+        console.log(error.message);
+        res.send({message: error.message});
+    }
+})
+
+//login a user 
+userRouter.post("/login", loginUser)
 
 //registering a user
 userRouter.post("/", async(req, res) => {
@@ -12,12 +31,24 @@ userRouter.post("/", async(req, res) => {
             !req.body.password
         ){
             return res.status(400).send({
-                message: "Send all required fields",
+                error: "Send all required fields",
             });
         }
+        const email = req.body.email;
+        const emailExist = await user.findOne({email});
+
+        if (emailExist){
+            console.log("Email is taken");
+            return res.json({
+                error: 'Email is already taken'
+            })
+        }
+
+        const hashedPassword = await hashPassword(req.body.password)
+
         const newUser = {
             email: req.body.email,
-            password: req.body.password,
+            password: hashedPassword,
         };
         const userId = await user.create(newUser);
 
