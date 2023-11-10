@@ -1,13 +1,13 @@
 import express, { Router } from "express";
 import { user } from "../models/userModel.js";
-import { test, loginUser } from "../controllers/authController.js";
+import { test, loginUser, getProfile } from "../controllers/authController.js";
 import cors from 'cors';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 
 
 const userRouter = express.Router();
 
-userRouter.use(cors());
+userRouter.get('/profile', getProfile);
 
 userRouter.get('/', async (req, res) => {
     try {

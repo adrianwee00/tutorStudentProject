@@ -7,12 +7,14 @@ import MyPage from './pages/myPage'
 import axios from 'axios'
 import UserDetail from './pages/userDetail'
 import { Toaster } from 'react-hot-toast'
+import { UserContextProvider } from '../context/userContext'
 
 axios.defaults.baseURL = "http://localhost:5555/user";
+axios.defaults.withCredentials = true; // this is super important in order for axios to save the cookies 
 
 const App = () => {
   return (
-    <>
+    <UserContextProvider>
     <Toaster position='bottom-right' toastOptions={{error:{duration:2000}}}/>
     <Routes>
       <Route path='/' element={<HomePage/>}/>
@@ -21,7 +23,7 @@ const App = () => {
       <Route path='/myPage' element={<MyPage/>}/>
       <Route path='/userDetails' element={<UserDetail/>}/>
     </Routes>
-    </>
+    </UserContextProvider>
   )
 }
 

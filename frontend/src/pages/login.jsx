@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai'
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
     const [users, getUsers] = useState([]);
@@ -36,8 +37,13 @@ const Login = () => {
         console.log(email);
     
         axios
-            .post("/login", data)
+            .post("/login", data, {withCredentials: true, credentials: 'include'})
             .then((response) => {
+                if(!response.data.error){
+                    navigate("/myPage")
+                }else{
+                    toast.error(response.data.error);
+                }
                 setLoading(false);
             })
             .catch((error) => {
