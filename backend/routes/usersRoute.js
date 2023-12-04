@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { user } from "../models/userModel.js";
-import { test, loginUser, getProfile } from "../controllers/authController.js";
+import { test, loginUser, getProfile, userPosting } from "../controllers/authController.js";
 import cors from 'cors';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 
@@ -9,15 +9,20 @@ const userRouter = express.Router();
 
 userRouter.get('/profile', getProfile);
 
-userRouter.get('/', async (req, res) => {
+
+// get the id of users
+userRouter.get('/:email', async (req, res) => {
     try {
-        const userIds = await user.find({});
-        return res.json(userIds);
+        const userDetail = await user.findOne({email: req.params.email});
+        return res.json(userDetail._id);
     } catch (error) {
         console.log(error.message);
         res.send({message: error.message});
     }
 })
+
+//user posting a post
+userRouter.post("/post/:id", userPosting)
 
 //login a user 
 userRouter.post("/login", loginUser)

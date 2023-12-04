@@ -46,9 +46,28 @@ const getProfile = (req, res) => {
         }
 }
 
+const userPosting = async(req, res) => {
+    try {
+        const {qualification, subjects, selfAppeal} = req.body;
+        console.log(qualification);
+        const newData = {
+            Qualification: qualification,
+            Subjects: subjects,
+            SelfAppeal: selfAppeal,
+        }
+        const msg = await user.findByIdAndUpdate(req.params.id,
+            { $push: { personalPost: newData } },
+            { new: true })
+        res.send(msg)
+    } catch(err){
+        console.log(err);
+    }
+}
+
 
 export {
     test, 
     loginUser,
     getProfile,
+    userPosting,
 }
