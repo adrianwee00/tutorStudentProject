@@ -1,10 +1,21 @@
 import React from 'react'
 import { NavbarMyPage } from '../components/navbar.jsx'
 import { UserContext } from '../../context/userContext.jsx'
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
+import axios from 'axios'
 
 const MyPage = () => {
-  const {user} = useContext(UserContext)
+  //The code below is replaced by using useEffect alone
+  //const {user} = useContext(UserContext)
+
+  const [user, setUser] = useState(null);
+    useEffect(() => {
+        if(!user) {
+            axios.get('/profile').then(({data}) => {
+                setUser(data)
+            })
+        }
+    }, [user])
   return (
     <div>
       <NavbarMyPage/>
