@@ -64,10 +64,77 @@ const userPosting = async(req, res) => {
     }
 }
 
+const userName = async(req, res) => {
+    try{
+        const {name} = req.body;
+        const filter = {email: req.params.email}
+        const option = {new: true}
+        const update = {name: name}
+
+        const msg = await user.findOneAndUpdate(filter, update, option)
+        res.send(msg)
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+const userPosts = async(req, res) => {
+    try{
+        /*
+        let dictionary = {
+            email: "",
+            qualification : "",
+            subject: "",
+        };
+        */ //if dictionary is created outside, since dictionary is an object, pushing this dictionary will push the same 
+           //object over and over again resulting in having same dictionaries in the whole list 
+        const postDetails = [];
+        const allPosts = await user.find({});
+        const newPosts = allPosts.filter(post => post.email !== req.params.email)
+        const finalPosts = [];
+        newPosts.forEach(post => {
+            if (post.personalPost.length !== 0) {
+                finalPosts.push(post);
+            }
+        });
+        finalPosts.forEach(post => {
+            let name = post.name
+            let email = post.email;
+            console.log(email)
+            post.personalPost.forEach(element => {
+                let dictionary = {
+                    id : "",
+                    name: "",
+                    email: "",
+                    qualification : "",
+                    subject: "",
+                }; //This will create a new dictionary for each iteration 
+                dictionary.name = name;
+                dictionary.id = element._id;
+                dictionary.email = email;
+                dictionary.qualification = element.Qualification;
+                dictionary.subject = element.Subjects;
+                console.log(dictionary)
+                console.log(element.Qualification)
+                postDetails.push(dictionary);
+                console.log(postDetails);
+            })
+        });
+
+        res.send(postDetails)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 
 export {
     test, 
     loginUser,
     getProfile,
     userPosting,
+    userPosts,
+    userName,
 }

@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { user } from "../models/userModel.js";
-import { test, loginUser, getProfile, userPosting } from "../controllers/authController.js";
+import { test, loginUser, getProfile, userPosting, userPosts, userName } from "../controllers/authController.js";
 import cors from 'cors';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 
@@ -20,6 +20,12 @@ userRouter.get('/:email', async (req, res) => {
         res.send({message: error.message});
     }
 })
+
+//find all the post from the database except the user own post
+userRouter.get("/post/:email", userPosts)
+
+//user inserting name
+userRouter.post("/name/:email", userName)
 
 //user posting a post
 userRouter.post("/post/:id", userPosting)
