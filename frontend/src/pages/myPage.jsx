@@ -2,7 +2,9 @@ import React from 'react'
 import { NavbarMyPage } from '../components/navbar.jsx'
 import { UserContext } from '../../context/userContext.jsx'
 import { useContext, useState, useEffect } from 'react'
+import PostForm from '../components/postForm.jsx'
 import Card from '../components/card.jsx'
+import NewCard from '../components/newCard.jsx'
 import axios from 'axios'
 
 function createCard(personal){
@@ -12,6 +14,18 @@ function createCard(personal){
       Name = {personal.name}
       Qualifications = {personal.qualification}
       Subjects = {personal.subject}
+    />
+  )
+}
+
+function createNewCard(personal){
+  return(
+    <NewCard
+      key = {personal.id}
+      name = {personal.name}
+      qualification = {personal.qualification}
+      subject = {personal.subject}
+      selfAppeal = {personal.selfAppeal}
     />
   )
 }
@@ -55,10 +69,15 @@ const MyPage = () => {
   return (
     <div>
       <NavbarMyPage/>
-      <div class="container mx-auto mt-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts && posts[0] && ( // only load this when the post variable has value, if not, there will be an error
-            posts.map(createCard)
+      { user &&(
+      <PostForm
+        email = {user.email}
+      />
+      )}
+      <div className="container mx-auto mt-8 profile-card-container"> 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grids-cols-3 gap-4 profile-cards-container">
+          {posts && posts[0] && (
+            posts.map(createNewCard)
           )}
         {/*
         {posts.map((post) => {

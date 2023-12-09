@@ -9,12 +9,14 @@ const Register = () => {
     const [loading, setLoading] = useState(false);  
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
 
     const navigate = useNavigate();
     function handleClick() {
         const data = {
             email,
             password,
+            name,
         }
         console.log(data);
         axios
@@ -41,6 +43,10 @@ const Register = () => {
     function registerEmail(event){
         setEmail(event.target.value);
     }
+
+    function registerName (event){
+        setName(event.target.value)
+    }
   return (
     <div >
     <div className='m-4 text-6xl'>
@@ -52,6 +58,10 @@ const Register = () => {
         <div className='justify-start'>
         </div>
         <h1 className='text-3xl text-white mb-5'>Registration Page</h1>
+        <div className="mb-6 w-9/12">
+            <label htmlFor="name" className="mb-2 text-xl font-medium text-gray-900 dark:text-white">Your Name</label>
+            <input name="name" onChange={registerName} value={name} type="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+        </div>
         <div className="mb-6 w-9/12">
             <label htmlFor="email" className="mb-2 text-xl font-medium text-gray-900 dark:text-white">Your email</label>
             <input name="email" onChange={registerEmail} value={email} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />

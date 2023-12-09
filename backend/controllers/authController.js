@@ -55,12 +55,22 @@ const userPosting = async(req, res) => {
             Subjects: subjects,
             SelfAppeal: selfAppeal,
         }
+
+        /*
         const msg = await user.findByIdAndUpdate(req.params.id,
             { $push: { personalPost: newData } },
             { new: true })
+        */
+
+        const msg = await user.findOneAndUpdate(
+            { email: req.params.email },
+            { $push: { personalPost: newData } },
+            { new: true }
+            );
         res.send(msg)
     } catch(err){
         console.log(err);
+        res.send(err);
     }
 }
 
@@ -109,12 +119,14 @@ const userPosts = async(req, res) => {
                     email: "",
                     qualification : "",
                     subject: "",
+                    selfAppeal: "",
                 }; //This will create a new dictionary for each iteration 
                 dictionary.name = name;
                 dictionary.id = element._id;
                 dictionary.email = email;
                 dictionary.qualification = element.Qualification;
                 dictionary.subject = element.Subjects;
+                dictionary.selfAppeal = element.SelfAppeal;
                 console.log(dictionary)
                 console.log(element.Qualification)
                 postDetails.push(dictionary);

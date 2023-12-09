@@ -28,7 +28,7 @@ userRouter.get("/post/:email", userPosts)
 userRouter.post("/name/:email", userName)
 
 //user posting a post
-userRouter.post("/post/:id", userPosting)
+userRouter.post("/post/:email", userPosting)
 
 //login a user 
 userRouter.post("/login", loginUser)
@@ -39,7 +39,8 @@ userRouter.post("/", async(req, res) => {
     try {
         if(
             !req.body.email ||
-            !req.body.password
+            !req.body.password ||
+            !req.body.name
         ){
             return res.status(400).send({
                 error: "Send all required fields",
@@ -60,6 +61,7 @@ userRouter.post("/", async(req, res) => {
         const newUser = {
             email: req.body.email,
             password: hashedPassword,
+            name : req.body.name,
         };
         const userId = await user.create(newUser);
 
