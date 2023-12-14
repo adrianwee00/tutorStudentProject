@@ -6,6 +6,11 @@ const test = (req, res) => {
     res.json("Test is working.")
 }
 
+const logout = async(req, res) => {
+    res.clearCookie("token", {httpOnly: false ,secure: true, sameSite: "None"}); // Setting the option for cookies is very important 
+    res.send('Logged out successfully!');
+    };
+
 const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body;
@@ -20,7 +25,7 @@ const loginUser = async (req, res) => {
         const match = await comparePassword(password, userFound.password)
         if(match){
             const token = jwt.sign({email: userFound.email, id: userFound._id}, process.env.JWT_SECRET, { expiresIn: '7d' })
-            res.cookie('token', token,  {httpOnly:true, secure:true, sameSite: "None", maxAge: 7 * 24 * 60 * 60 * 1000})
+            res.cookie('token', token,  {httpOnly: false ,secure: true, sameSite: "None", maxAge: 7 * 24 * 60 * 60 * 1000})
             res.json(userFound);
             console.log("password matched")
         }else{
@@ -149,4 +154,5 @@ export {
     userPosting,
     userPosts,
     userName,
+    logout,
 }

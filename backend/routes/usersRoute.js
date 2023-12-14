@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { user } from "../models/userModel.js";
-import { test, loginUser, getProfile, userPosting, userPosts, userName } from "../controllers/authController.js";
+import { test, loginUser, getProfile, userPosting, userPosts, userName, logout } from "../controllers/authController.js";
+import { getPersonalPost, deletePost } from "../controllers/dashboardControllers.js";
 import cors from 'cors';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 
@@ -8,6 +9,12 @@ import { hashPassword, comparePassword } from "../helpers/auth.js";
 const userRouter = express.Router();
 
 userRouter.get('/profile', getProfile);
+
+userRouter.post('/logout', logout);
+
+userRouter.get('/myDashboard/:email', getPersonalPost);
+
+userRouter.delete('/:id', deletePost)
 
 
 // get the id of users

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaSchool } from 'react-icons/fa'
+import ProfileButton from './profileButton.jsx'
 
 const Navbar = () => {
   return (
@@ -34,10 +35,13 @@ const NavbarMyPage = () => {
               <div className="bg-gray-700 flex justify-between items-center h-20">
                   <div className="text-white text-2xl font-semibold mx-4">
                   <div className='flex'>
+                  <Link to="/myPage">
                   <FaSchool className='mt-1'/>
+                  </Link>
                   <h1 className='mx-2'>Freedemy</h1>
                   </div>
                   </div>
+                  <ProfileButton/>
               </div>
           </nav>
       </div>

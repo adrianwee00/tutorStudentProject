@@ -5,6 +5,7 @@ import Login from './pages/login'
 import Register from './pages/register'
 import MyPage from './pages/myPage'
 import axios from 'axios'
+import MyDash from './pages/myDashBoard'
 import UserDetail from './pages/userDetail'
 import { Toaster } from 'react-hot-toast'
 import { UserContextProvider } from '../context/userContext'
@@ -22,6 +23,7 @@ const App = () => {
       <Route path='/userRegister' element={<Register/>}/>
       <Route path='/myPage' element={<MyPage/>}/>
       <Route path='/userDetails' element={<UserDetail/>}/>
+      <Route path='/myDashBoard' element={<MyDash/>}/>
     </Routes>
     </UserContextProvider>
   )

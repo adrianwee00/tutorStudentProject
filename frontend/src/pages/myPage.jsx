@@ -3,20 +3,8 @@ import { NavbarMyPage } from '../components/navbar.jsx'
 import { UserContext } from '../../context/userContext.jsx'
 import { useContext, useState, useEffect } from 'react'
 import PostForm from '../components/postForm.jsx'
-import Card from '../components/card.jsx'
 import NewCard from '../components/newCard.jsx'
 import axios from 'axios'
-
-function createCard(personal){
-  return(
-    <Card
-      key = {personal.id}
-      Name = {personal.name}
-      Qualifications = {personal.qualification}
-      Subjects = {personal.subject}
-    />
-  )
-}
 
 function createNewCard(personal){
   return(
