@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import { user } from "../models/userModel.js";
 import { test, loginUser, getProfile, userPosting, userPosts, userName, logout } from "../controllers/authController.js";
-import { getPersonalPost, deletePost } from "../controllers/dashboardControllers.js";
+import { getPersonalPost, deletePost, postEmail, handleCookies } from "../controllers/dashboardControllers.js";
 import cors from 'cors';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 
@@ -15,6 +15,15 @@ userRouter.post('/logout', logout);
 userRouter.get('/myDashboard/:email', getPersonalPost);
 
 userRouter.delete('/:id', deletePost)
+
+userRouter.post('/email', postEmail)
+
+userRouter.post('/cookies', handleCookies)
+
+userRouter.get('/getCookie', (req, res) => {
+    const decodedEmail = decodeURIComponent(req.cookies.email);
+    res.send(decodedEmail);
+  });
 
 
 // get the id of users

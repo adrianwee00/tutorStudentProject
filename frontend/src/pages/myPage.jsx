@@ -14,6 +14,7 @@ function createNewCard(personal){
       qualification = {personal.qualification}
       subject = {personal.subject}
       selfAppeal = {personal.selfAppeal}
+      email = {personal.email}
     />
   )
 }
