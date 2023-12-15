@@ -23,6 +23,7 @@ const MyPage = () => {
   //The code below is replaced by using useEffect alone
   //const {user} = useContext(UserContext)
   const [posts, setPost] = useState(null);
+  const [appPassword, setAppPassword] = useState("")
   var email = "";
   
   const [user, setUser] = useState(null);
@@ -30,11 +31,9 @@ const MyPage = () => {
         if(!user) {
             axios.get('/profile').then(({data}) => {
                 setUser(data)
-                console.log(data)
             })
         }
     }, [user])
-
   
   if(user){
     email = user.email;
@@ -46,8 +45,6 @@ const MyPage = () => {
     if(user && user.email){ //only run this code when user and user.email exist, if not, axios will send get request before email has a value
                             // when loading up the page 
     axios.get(`/post/${email}`).then(({data}) => {
-      console.log(data)
-      console.log(`/post/${email}`)
       setPost(data)
     })
   }

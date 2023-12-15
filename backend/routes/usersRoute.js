@@ -4,9 +4,14 @@ import { test, loginUser, getProfile, userPosting, userPosts, userName, logout }
 import { getPersonalPost, deletePost, postEmail, handleCookies } from "../controllers/dashboardControllers.js";
 import cors from 'cors';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
+import { getPassword, appPost } from "../controllers/appPasswordController.js";
 
 
 const userRouter = express.Router();
+
+userRouter.post('/appPassword/:email', appPost);
+
+userRouter.get('/appPassword/:email', getPassword);
 
 userRouter.get('/profile', getProfile);
 

@@ -1,21 +1,56 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import PasswordAlert from "./AppForm.jsx";
 
 const NewCard = (props) =>{
     const navigate = useNavigate()
+    const [isPasswordAlertVisible, setPasswordAlertVisibility] = useState(false);
+    const [appPassword, setAppPassword] = useState("");
+
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+      if(!user) {
+          axios.get('/profile').then(({data}) => {
+              setUser(data)
+              console.log(data)
+          })
+      }
+  }, [user])
+
+    const handleClosePasswordAlert = () => {
+      setPasswordAlertVisibility(false);
+    };
+
+    useEffect(() => {
+      if (user){
+        axios.get('/appPassword/' + user.email).then((response) => {
+          setAppPassword(response.data.appPassword)
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+    }, [user, handleClosePasswordAlert, appPassword])
+
     const data = {
       email: props.email
     }
     function handleClick (){
-      navigate('/contact')
-      console.log(data.email)
-      axios.post("/cookies",data).then((response) => {
+      if (!appPassword){
+        setPasswordAlertVisibility(true);
+      }
+      else{
+        navigate('/contact')
+        console.log(data.email)
+        axios.post("/cookies",data).then((response) => {
         console.log(response)
-      }).catch((err)=>{
+        }).catch((err)=>{
         console.log(err)
-      })
+        })
+      }
+      
     }
     return(
         <div>
@@ -28,6 +63,9 @@ const NewCard = (props) =>{
             <p className="text-white text-sm italic">{props.selfAppeal}</p>
           </div>
             <button className="contact-button" onClick={handleClick}>Contact</button>
+            {isPasswordAlertVisible && user &&(
+        <PasswordAlert onClose={handleClosePasswordAlert} email = {user.email}/>
+      )}
         </div>
       </div>
         </div>

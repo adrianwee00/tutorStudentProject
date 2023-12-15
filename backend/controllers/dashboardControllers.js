@@ -34,6 +34,7 @@ const postEmail = async(req, res) => {
         const receiverEmail = req.body.receiverEmail;
         const userText = req.body.text;
         const sub = req.body.sub;
+        const appPassword = req.body.appPassword;
 
         console.log(sub)
 
@@ -46,7 +47,7 @@ const postEmail = async(req, res) => {
             secure: true, // Use TLS for secure connection
             auth: {
             user: senderEmail, // your Gmail email address
-            pass: process.env.APP_PASSWORD,   // the app password you generated
+            pass: appPassword,   // the app password you generated
             },
         });
 

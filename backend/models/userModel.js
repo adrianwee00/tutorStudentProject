@@ -20,6 +20,9 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },  
+        appPassword: {
+            type: String,
+        },
         personalPost: [subSchema],
     },
     {

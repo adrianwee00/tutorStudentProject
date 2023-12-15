@@ -12,6 +12,7 @@ const Contact = () => {
     const [text, setText] = useState("");
     const [subject, setSubject] = useState("");
     const [receiverEmail, setReceiverEmail] = useState("");
+    const [appPassword, setAppPassword] = useState("");
 
     const navigate = useNavigate()
 
@@ -24,6 +25,15 @@ const Contact = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        if(user){
+            axios.get('/appPassword/' + user.email).then((response) => {
+                setAppPassword(response.data.appPassword)
+              }).catch((err) => {
+                console.log(err)
+              })
+        }
+      })
 
     function handleSubject(event){
         setSubject(event.target.value)
@@ -42,10 +52,15 @@ const Contact = () => {
         setText(event.target.value)
     }
 
+    function handleCancel(){
+        navigate("/myPage")
+    }
+
     function handleClick(){
         const data = {
             senderEmail: user.email,
             receiverEmail: receiverEmail,
+            appPassword: appPassword,
             text: text,
             sub: subject
         }
@@ -78,7 +93,7 @@ const Contact = () => {
                 <div className="count ml-auto text-gray-400 text-xs font-semibold">0/300</div>
                 </div>
                 <div className="buttons flex">
-                <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">Cancel</div>
+                <div onClick={handleCancel} className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">Cancel</div>
                 <button onClick={handleClick} className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">Post</button>
                 </div>
             </div>
